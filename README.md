@@ -1,1 +1,2 @@
-# Detecting-Coral-bleaching-using-Remote-Sensing
+# Detecting Coral bleaching using Remote Sensing
+
