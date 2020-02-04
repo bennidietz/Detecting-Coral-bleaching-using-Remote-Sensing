@@ -1,7 +1,5 @@
 rm(list = ls())
 # import used libraries
-install.packages("raster")
-install.packages("rgdal")
 library(rgdal)
 library(raster)
 
@@ -23,18 +21,18 @@ getPixelIndex = function(raster_stack, x, y) {
   return(c(y_index,x_index))
 }
 
-plotRGB(crop1_2016_1, r=3,g=2,b=1, stretch="lin",colNA="purple") # plot an imagery
+plotRGB(crop1_2016_1, r=3,g=2,b=1, stretch="lin",colNA="purple") # plot an image
 drawExtent() # execute the function, double click on that pixel and take the xmin and ymin to get index of pixel:
 getPixelIndex(crop1_2016_1, 347271.2 ,340107.4) # for exmaple: these two coordinates gives the pixel with the index [99,21]
 
-# function the normalizes the raster: devide the actual pixel darkness by the mean pixel darkness of a whole imagery
+# function to normalize the raster: devide the actual pixel darkness by the mean pixel darkness of a whole image
 normalizeRaster=function(raster){
   raster$darkness = raster[[1]] + raster[[2]] + raster[[3]]
   normalized = (raster$darkness-max(values(raster$darkness)))/(min(values(raster$darkness))-max(values(raster$darkness)))
   return(normalized)
 }
 
-# funktion to get the darkness values of the time series for a specific pixel coordinate
+# function to get the darkness values of the time series for a specific pixel coordinate
 # one function for each extent
 getDarknessValuesCrop1 = function(y, x) {
   return(c(normalizeRaster(crop1_2016_1)[y,x],
@@ -74,7 +72,7 @@ getDarknessValuesCrop5 = function(y, x) {
            normalizeRaster(crop5_2019)[y,x]))
 }
 
-# take all indices of pixels that can be expected as corals and take them together in a vector:
+# take all indices of pixels that can be expected as corals and put them into a vector:
 darknessTimeSeries_Crop1 = c(getDarknessValuesCrop1(99,21), getDarknessValuesCrop1(91,42), getDarknessValuesCrop1(115,40), getDarknessValuesCrop1(137,39), getDarknessValuesCrop1(127,23),
           getDarknessValuesCrop1(30,11), getDarknessValuesCrop1(64,22), getDarknessValuesCrop1(55,34))
 table_Crop1 =data.frame(matrix(darknessTimeSeries_Crop1,ncol=5,byrow=TRUE), stringsAsFactors = FALSE) # make a table out of it
