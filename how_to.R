@@ -96,7 +96,7 @@ norm1 <- do.call("rbind",lapply("norm1.csv",
 norm1_schnitt<-rename(norm1[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
 transform_norm1<-rownames_to_column(data.frame(t(norm1_schnitt)))
 
-############Line Plot with Regression Line###########
+#Line Plot with Regression Line
 
 regline1 <- melt(transform_norm1 ,  id.vars = 'rowname', variable.name = 'series')
 regline1$rowname <- as.Date(regline1$rowname,'%Y %B %d')
@@ -114,7 +114,7 @@ norm2 <- do.call("rbind",lapply("norm2.csv",
 norm2_schnitt<-rename(norm2[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
 transform_norm2<-rownames_to_column(data.frame(t(norm2_schnitt)))
 
-############Line Plot with Regression Line###########
+#Line Plot with Regression Line
 
 regline2 <- melt(transform_norm2 ,  id.vars = 'rowname', variable.name = 'series')
 regline2$rowname <- as.Date(regline2$rowname,'%Y %B %d')
@@ -131,7 +131,7 @@ norm3 <- do.call("rbind",lapply("norm3.csv",
 norm3_schnitt<-rename(norm3[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
 transform_norm3<-rownames_to_column(data.frame(t(norm3_schnitt)))
 
-############Line Plot with Regression Line###########
+#Line Plot with Regression Line
 
 regline3 <- melt(transform_norm3 ,  id.vars = 'rowname', variable.name = 'series')
 regline3$rowname <- as.Date(regline3$rowname,'%Y %B %d')
@@ -148,7 +148,7 @@ norm4 <- do.call("rbind",lapply("norm4.csv",
 norm4_schnitt<-rename(norm4[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
 transform_norm4<-rownames_to_column(data.frame(t(norm4_schnitt)))
 
-############Line Plot with Regression Line###########
+#Line Plot with Regression Line
 
 regline4 <- melt(transform_norm4 ,  id.vars = 'rowname', variable.name = 'series')
 regline4$rowname <- as.Date(regline4$rowname,'%Y %B %d')
@@ -158,7 +158,7 @@ ggplot(regline4, aes(rowname,value)) +
   labs(x = "Year", y = "Darkness")
 
 
-############Mean Plots#######
+############Mean Plots#########
 
 transform_norm1_mean<-data.frame(transform_norm1, means=rowMeans(transform_norm1[2:9]))
 transform_norm2_mean<-data.frame(transform_norm2, means=rowMeans(transform_norm2[2:7]))
