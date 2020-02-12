@@ -78,3 +78,99 @@ darknessTimeSeries_Crop1 = c(getDarknessValuesCrop1(99,21), getDarknessValuesCro
 table_Crop1 =data.frame(matrix(darknessTimeSeries_Crop1,ncol=5,byrow=TRUE), stringsAsFactors = FALSE) # make a table out of it
 colnames(table_Crop1) = c("2016_1", "2016_2","2017", "2018", "2019") # reanme the columns
 table_Crop1
+
+# trend analysis of the different vectors
+# importing additional modules
+
+library(sp)
+library(tidyverse)
+require(reshape2)
+
+# setting working directory
+setwd("D:/Dokumente/Studium/7.Semester/Studienprojekt")
+
+#############Vector 1###############
+norm1 <- do.call("rbind",lapply("norm1.csv",
+                                          FUN=function(files){read.table(files,
+                                                                         header=TRUE, sep=",")}))
+norm1_schnitt<-rename(norm1[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
+transform_norm1<-rownames_to_column(data.frame(t(norm1_schnitt)))
+
+#Line Plot with Regression Line
+
+regline1 <- melt(transform_norm1 ,  id.vars = 'rowname', variable.name = 'series')
+regline1$rowname <- as.Date(regline1$rowname,'%Y %B %d')
+ggplot(regline1, aes(rowname,value)) + 
+  geom_line(aes(colour = series), size=2) +
+  geom_smooth(method=lm, se=TRUE)+
+  labs(x = "Year", y = "Darkness")
+
+
+#############Vector 2###############
+
+norm2 <- do.call("rbind",lapply("norm2.csv",
+                                FUN=function(files){read.table(files,
+                                                               header=TRUE, sep=",")}))
+norm2_schnitt<-rename(norm2[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
+transform_norm2<-rownames_to_column(data.frame(t(norm2_schnitt)))
+
+#Line Plot with Regression Line
+
+regline2 <- melt(transform_norm2 ,  id.vars = 'rowname', variable.name = 'series')
+regline2$rowname <- as.Date(regline2$rowname,'%Y %B %d')
+ggplot(regline2, aes(rowname,value)) + 
+  geom_line(aes(colour = series), size=2) +
+  geom_smooth(method=lm, se=TRUE)+
+  labs(x = "Year", y = "Darkness")
+
+#############Vector 3###############
+
+norm3 <- do.call("rbind",lapply("norm3.csv",
+                                FUN=function(files){read.table(files,
+                                                               header=TRUE, sep=",")}))
+norm3_schnitt<-rename(norm3[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
+transform_norm3<-rownames_to_column(data.frame(t(norm3_schnitt)))
+
+#Line Plot with Regression Line
+
+regline3 <- melt(transform_norm3 ,  id.vars = 'rowname', variable.name = 'series')
+regline3$rowname <- as.Date(regline3$rowname,'%Y %B %d')
+ggplot(regline3, aes(rowname,value)) + 
+  geom_line(aes(colour = series), size=2) +
+  geom_smooth(method=lm, se=TRUE)+
+  labs(x = "Year", y = "Darkness")
+
+#############Vector 4###############
+
+norm4 <- do.call("rbind",lapply("norm4.csv",
+                                FUN=function(files){read.table(files,
+                                                               header=TRUE, sep=",")}))
+norm4_schnitt<-rename(norm4[2:6], "2016 August 01"=X2016_1, "2016 November 01"=X2016_2, "2017 Dezember 01"=X2017, "2018 Dezember 01"=X2018, "2019 Dezember 01"=X2019)
+transform_norm4<-rownames_to_column(data.frame(t(norm4_schnitt)))
+
+#Line Plot with Regression Line
+
+regline4 <- melt(transform_norm4 ,  id.vars = 'rowname', variable.name = 'series')
+regline4$rowname <- as.Date(regline4$rowname,'%Y %B %d')
+ggplot(regline4, aes(rowname,value)) + 
+  geom_line(aes(colour = series), size=2) +
+  geom_smooth(method=lm, se=TRUE)+
+  labs(x = "Year", y = "Darkness")
+
+
+############Mean Plots#########
+
+transform_norm1_mean<-data.frame(transform_norm1, means=rowMeans(transform_norm1[2:9]))
+transform_norm2_mean<-data.frame(transform_norm2, means=rowMeans(transform_norm2[2:7]))
+transform_norm3_mean<-data.frame(transform_norm3, means=rowMeans(transform_norm3[2:6]))
+transform_norm4_mean<-data.frame(transform_norm4, means=rowMeans(transform_norm4[2:7]))
+transform_mean_all<-data.frame(rowname=transform_norm1_mean$rowname,mean_norm1=rowMeans(transform_norm1[2:9]), mean_norm2=rowMeans(transform_norm2[2:7]),
+                               mean_norm3=rowMeans(transform_norm3[2:6]), mean_norm4=rowMeans(transform_norm4[2:7]))
+
+reglineAll <- melt(transform_mean_all ,  id.vars = 'rowname', variable.name = 'series')
+reglineAll$rowname <- as.Date(reglineAll$rowname,'%Y %B %d')
+
+ggplot(reglineAll, aes(rowname,value)) + 
+  geom_line(aes(colour = series), size=2) +
+  geom_smooth(method=lm, se=TRUE)+
+  labs(x = "Year", y = "Darkness")
